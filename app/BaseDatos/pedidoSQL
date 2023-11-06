@@ -1,0 +1,14 @@
+<?php
+include ("accesoDatos.php");
+class PedidoSQL
+{
+    public static function InsertarPedido($pedido)
+    {
+        $estado=$pedido->tipo->value;
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+        $consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO pedido (nombreCliente,idProductoPedido,totalPrecio,estado,tiempoEstimado,numeroMesa) VALUES('$pedido->nombreCliente','$pedido->idProductoPedido','$pedido->$totalPrecio','$estado','$pedido->$tiempoEstimado','$pedido->$numeroMesa')");
+        $consulta->execute();
+        return $objetoAccesoDato->RetornarUltimoIdInsertado();
+    }
+}
+?>
