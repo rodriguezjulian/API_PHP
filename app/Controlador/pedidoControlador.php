@@ -1,23 +1,28 @@
 <?php
+include ("./Modelo/pedido.php");
+include ("./BaseDatos/pedidoSQL.php");
+
 class PedidoControlador
 {
     public function Insertar($request, $response, $args)
     {
         //Obtengo los parametros que el servidor me envio
         $parametros = $request->getParsedBody();
-        if(isset($parametros['nombreCliente']) && isset($parametros['idProductoPedido']) && isset($parametros['totalPrecio']) && isset($parametros['estado'])&& isset($parametros['tiempoEstimado'])&& isset($parametros['numeroMesa']))
+        if(isset($parametros['nombreCliente']) && isset($parametros['totalPrecio']) && isset($parametros['estado'])&& isset($parametros['tiempoEstimado'])&& isset($parametros['numeroMesa']))
         {
             // $consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO empleado(`id`, `rol`, `nombre`, `diponible`, `estado`)
             $nombreCliente = $parametros['nombreCliente'];
-            $idProductoPedido = $parametros['idProductoPedido'];
+           // $idProductoPedido = $parametros['idProductoPedido'];
             $totalPrecio = $parametros['totalPrecio'];
             $estado = $parametros['estado'];
-            $estado = $parametros['tiempoEstimado'];
-            $estado = $parametros['numeroMesa'];
+            $tiempoEstimado = $parametros['tiempoEstimado'];
+            $numeroMesa = $parametros['numeroMesa'];
             //Creo el objeto
             $pedido = new Pedido();
+            $pedido->id = Pedido::GenerarId();
             $pedido->nombreCliente = $nombreCliente;
-            $pedido->idProductoPedido =$idProductoPedido;
+           // echo $idProductoPedido;
+           // $pedido->idProductoPedido =$idProductoPedido;
             $pedido->totalPrecio =$totalPrecio;
             $pedido->estado = EstadoPedido::from($estado);
             $pedido->tiempoEstimado =$tiempoEstimado;
@@ -33,5 +38,28 @@ class PedidoControlador
         return $response
           ->withHeader('Content-Type', 'application/json');
     } 
+
+    /*public function TraerUno($request, $response, $args)
+    {
+        // Busco pedido por id
+        $pedid = $args['pedido'];
+        $pedido = ObtenerPedido($pedid);
+        $payload = json_encode($pedido);
+
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }*/
+    
+    public function TraerTodos($request, $response, $args)
+    {
+        $lista = pedidoSQL::ObtenerTodos();
+        $payload = json_encode(array("listapedidos" => $lista));
+
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
+
 }
 ?>
