@@ -1,22 +1,25 @@
 <?php
+include ("./Modelo/empleado.php");
+include ("./BaseDatos/empleadoSQL.php");
 class EmpleadoControlador
 {
-    public function Insertar($request, $response, $args)
+    public function InsertarEmpleado($request, $response, $args)
     {
         //Obtengo los parametros que el servidor me envio
         $parametros = $request->getParsedBody();
-        if(isset($parametros['rol']) && isset($parametros['nombre']) && isset($parametros['diponible']) && isset($parametros['estado']))
+        if(isset($parametros['rol']) && isset($parametros['nombre']) && isset($parametros['disponible']) && isset($parametros['estado']))
         {
             // $consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO empleado(`id`, `rol`, `nombre`, `diponible`, `estado`)
             $rol = $parametros['rol'];
             $nombre = $parametros['nombre'];
-            $diponible = $parametros['diponible'];
+            $disponible = $parametros['disponible'];
             $estado = $parametros['estado'];
             //Creo el objeto
             $empleado = new Empleado();
-            $empleado->rol =Rol::from($rol);
+            //$pedido->estado = EstadoPedido::from($estado);
+            $empleado->rol = Rol::from($rol);
             $empleado->nombre = $nombre;
-            $empleado->diponible =$diponible;
+            $empleado->disponible =$disponible;
             $empleado->estado = EstadoEmpleado::from($estado);
             EmpleadoSQL::InsertarEmpleado($empleado);
             $payload = json_encode(array("mensaje" => "Empleado creado con exito"));
@@ -29,6 +32,14 @@ class EmpleadoControlador
         return $response
           ->withHeader('Content-Type', 'application/json');
     } 
+    public function TraerEmpleados($request, $response, $args)
+    {
+        $lista = EmpleadoSQL::ObtenerEmpleados();
+        $payload = json_encode(array("listaEmpleados" => $lista));
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
 }
 ?>
 

@@ -1,4 +1,7 @@
 <?php
+include ("./Modelo/encuesta.php");
+include ("./BaseDatos/encuestaSQL.php");
+
 class EncuestaControlador
 {
     public function Insertar($request, $response, $args)
@@ -7,7 +10,6 @@ class EncuestaControlador
         $parametros = $request->getParsedBody();
         if(isset($parametros['nombreCliente']) && isset($parametros['descripcion']) && isset($parametros['puntuacionMesa']) && isset($parametros['puntuacionMozo']) && isset($parametros['puntuacionCocinero']) && isset($parametros['puntuacionRestaurant']))
         {
-            // $consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO empleado(`id`, `rol`, `nombre`, `diponible`, `estado`)
             $nombreCliente = $parametros['nombreCliente'];
             $descripcion = $parametros['descripcion'];
             $puntuacionMesa = $parametros['puntuacionMesa'];
@@ -33,6 +35,14 @@ class EncuestaControlador
         return $response
           ->withHeader('Content-Type', 'application/json');
     } 
+    public function TraerEncuestas($request, $response, $args)
+    {
+        $lista = encuestaSQL::TraerEncuestas();
+        $payload = json_encode(array("listapedidos" => $lista));
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
 }
 ?>
 

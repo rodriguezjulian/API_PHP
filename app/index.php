@@ -34,5 +34,18 @@ $app->group('/pedido', function (RouteCollectorProxy $group) {
     $group->post('[/]', \pedidoControlador::class . ':Insertar');
   });
 
+  $app->group('/encuesta', function (RouteCollectorProxy $group) {
+    $group->get('[/]', \EncuestaControlador::class . ':TraerEncuestas');
+    //$group->get('/{id}', \mesaControlador::class . ':TraerUno');
+    $group->post('[/]', \EncuestaControlador::class . ':Insertar');
+  });
+
+  $app->group('/empleado', function (RouteCollectorProxy $group) {
+    $group->get('[/]', \EmpleadoControlador::class . ':TraerEmpleados');
+    //$group->get('/{id}', \mesaControlador::class . ':TraerUno');
+    $group->post('[/]', \EmpleadoControlador::class . ':InsertarEmpleado');
+  });
+
+
 $app->run();
 ?>

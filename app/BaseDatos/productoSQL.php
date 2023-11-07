@@ -1,5 +1,5 @@
 <?php
-include ("accesoDatos.php");
+//include ("accesoDatos.php");
 class ProductoSQL
 {
     public static function InsertarProducto($producto)

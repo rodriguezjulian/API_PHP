@@ -50,12 +50,11 @@ class PedidoControlador
         return $response
           ->withHeader('Content-Type', 'application/json');
     }*/
-    
+
     public function TraerTodos($request, $response, $args)
     {
         $lista = pedidoSQL::ObtenerTodos();
         $payload = json_encode(array("listapedidos" => $lista));
-
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');

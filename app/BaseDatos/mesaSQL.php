@@ -1,5 +1,5 @@
 <?php
-include ("accesoDatos.php");
+//include ("accesoDatos.php");
 class MesaSQL
 {
     public static function InsertarMesa($mesa)
@@ -10,5 +10,15 @@ class MesaSQL
         $consulta->execute();
         return $objetoAccesoDato->RetornarUltimoIdInsertado();
     }
+
+    /*public static function ObtenerMesas()
+    {
+        $objAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
+        $consulta = $objAccesoDatos->RetornarConsulta("SELECT id, nombreCliente, totalPrecio, estado, tiempoEstimado, numeroMesa FROM pedido");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
+    }*/
+    
 }
 ?>

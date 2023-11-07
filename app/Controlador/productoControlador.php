@@ -1,4 +1,6 @@
 <?php
+include ("./Modelo/producto.php");
+include ("./BaseDatos/productoSQL.php");
 class ProductoControlador
 {
     public function Insertar($request, $response, $args)

@@ -1,5 +1,5 @@
 <?php
-include ("accesoDatos.php");
+//include ("accesoDatos.php");
 class EncuestaSQL
 {
     public static function InsertarEncuesta($encuesta)
@@ -9,5 +9,15 @@ class EncuestaSQL
         $consulta->execute();
         return $objetoAccesoDato->RetornarUltimoIdInsertado();
     }
+    public static function TraerEncuestas()
+    {
+        $objAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
+        $consulta = $objAccesoDatos->RetornarConsulta("SELECT idMesa, nombreCliente, descripcion, puntuacionMesa, puntuacionMozo, puntuacionCocinero, puntuacionRestaurant FROM encuesta");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'encuesta');
+    }
+    
+
 }
 ?>

@@ -29,25 +29,25 @@ class PedidoSQL
 
         return $resultado;
     }*/
-    public static function ObtenerTodos($request, $response, $args)
+    public static function ObtenerTodos()
     {
-        $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombreCliente, totalPrecio, estado, tiempoEstimado, numeroMesa FROM pedido");
+        $objAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
+        $consulta = $objAccesoDatos->RetornarConsulta("SELECT id, nombreCliente, totalPrecio, estado, tiempoEstimado, numeroMesa FROM pedido");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
     }
 
-    /*
-       public static function obtenerTodos()
+    
+      /* public static function obtenerTodos()
         {
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave FROM usuarios");
             $consulta->execute();
 
             return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
-        }
-    */ 
+        }*/
+    
 
 
 

@@ -1,4 +1,6 @@
 <?php
+include ("./Modelo/mesa.php");
+include ("./BaseDatos/mesaSQL.php");
 class MesaControlador
 {
     public function Insertar($request, $response, $args)
@@ -7,7 +9,7 @@ class MesaControlador
         $parametros = $request->getParsedBody();
         if(isset($parametros['idPedido']) && isset($parametros['idMozo']) && isset($parametros['estado']))
         {
-            // $consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO empleado(`id`, `rol`, `nombre`, `diponible`, `estado`)
+            //$consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO empleado(`id`, `rol`, `nombre`, `diponible`, `estado`);
             $rol = $parametros['rol'];
             $nombre = $parametros['nombre'];
             $diponible = $parametros['diponible'];
@@ -28,4 +30,16 @@ class MesaControlador
         return $response
           ->withHeader('Content-Type', 'application/json');
     } 
+
+    public function TraerMesas($request, $response, $args)
+    {
+        $lista = mesaSQL::ObtenerTodos();
+        $payload = json_encode(array("listapedidos" => $lista));
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
+
+
+
 }
