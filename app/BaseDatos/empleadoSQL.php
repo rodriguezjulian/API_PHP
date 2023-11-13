@@ -28,6 +28,13 @@ class EmpleadoSQL
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'empleado');
         
     }
-
+    public static function ObtenerEmpleado($id)
+    {
+        $objAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
+        $consulta = $objAccesoDatos->RetornarConsulta("SELECT * FROM empleados WHERE id = :id");
+        $consulta->bindValue(':id', $id);
+        $consulta->execute();
+        return $consulta->fetchObject('empleado');
+    }
 }
 ?>

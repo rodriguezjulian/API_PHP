@@ -39,18 +39,16 @@ class PedidoControlador
           ->withHeader('Content-Type', 'application/json');
     } 
 
-    /*public function TraerUno($request, $response, $args)
+    public function ObtenerPedidoxId($request, $response, $args)
     {
-        // Busco pedido por id
-        $pedid = $args['pedido'];
-        $pedido = ObtenerPedido($pedid);
+        $id = $args['id'];
+        $pedido = PedidoSQL::ObtenerPedido($id);
         $payload = json_encode($pedido);
 
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');
-    }*/
-
+    }
     public function TraerTodos($request, $response, $args)
     {
         $lista = pedidoSQL::ObtenerTodos();

@@ -40,6 +40,17 @@ class EmpleadoControlador
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
+    
+    public function ObtenerEmpleadoxId($request, $response, $args)
+    {
+        $id = $args['id'];
+        $empleado = EmpleadoSQL::ObtenerEmpleado($id);
+        $payload = json_encode($empleado);
+
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
 }
 ?>
 

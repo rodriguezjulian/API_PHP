@@ -3,16 +3,15 @@ include ("./Modelo/mesa.php");
 include ("./BaseDatos/mesaSQL.php");
 class MesaControlador
 {
-    public function Insertar($request, $response, $args)
+    public function InsertarMesa($request, $response, $args)
     { 
         //Obtengo los parametros que el servidor me envio
         $parametros = $request->getParsedBody();
         if(isset($parametros['idPedido']) && isset($parametros['idMozo']) && isset($parametros['estado']))
         {
-            //$consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO empleado(`id`, `rol`, `nombre`, `diponible`, `estado`);
-            $rol = $parametros['rol'];
-            $nombre = $parametros['nombre'];
-            $diponible = $parametros['diponible'];
+           // echo "llegue";
+            $idPedido = $parametros['idPedido'];
+            $idMozo = $parametros['idMozo'];
             $estado = $parametros['estado'];
             //Creo el objeto
             $mesa = new Mesa();
@@ -33,13 +32,22 @@ class MesaControlador
 
     public function TraerMesas($request, $response, $args)
     {
-        $lista = mesaSQL::ObtenerTodos();
-        $payload = json_encode(array("listapedidos" => $lista));
+        $lista = mesaSQL::TraerMesas();
+        $payload = json_encode(array("listamesas" => $lista));
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
+    public function ObtenerMesaxId($request, $response, $args)
+    {
+        $id = $args['id'];
+        $mesa = MesaSQL::ObtenerMesa($id);
+        $payload = json_encode($mesa);
 
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
 
 
 }

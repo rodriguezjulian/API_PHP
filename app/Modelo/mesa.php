@@ -25,7 +25,7 @@ class Mesa
             call_user_func_array(array($this,$funcion_constructor),$params);
         }
     }
-    public function __construct3($idPedido = null, $idMozo = null, $estado = Estado::Cerrado) 
+    public function __construct3($idPedido = null, $idMozo = null, $estado = EstadoMesa::Cerrado) 
     {
         $this->idPedido = $idPedido;
         $this->idMozo = $idMozo;

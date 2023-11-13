@@ -2,6 +2,7 @@
 
 class Encuesta
 {
+    public $id;
     public $idMesa;
     public $nombreCliente;
     public $descripcion;
@@ -25,8 +26,9 @@ class Encuesta
             call_user_func_array(array($this,$funcion_constructor),$params);
         }
     }
-    public function __construct7($idMesa, $nombreCliente, $descripcion, $puntuacionCocinero, $puntuacionMesa, $puntuacionMozo, $puntuacionRestaurant) 
+    public function __construct7($id,$idMesa, $nombreCliente, $descripcion, $puntuacionCocinero, $puntuacionMesa, $puntuacionMozo, $puntuacionRestaurant) 
     {
+        $this->id = $id;
         $this->idMesa = $idMesa;
         $this->nombreCliente = $nombreCliente;
         $this->descripcion = $descripcion;

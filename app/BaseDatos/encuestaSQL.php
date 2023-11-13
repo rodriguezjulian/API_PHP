@@ -12,12 +12,20 @@ class EncuestaSQL
     public static function TraerEncuestas()
     {
         $objAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
-        $consulta = $objAccesoDatos->RetornarConsulta("SELECT idMesa, nombreCliente, descripcion, puntuacionMesa, puntuacionMozo, puntuacionCocinero, puntuacionRestaurant FROM encuesta");
+        $consulta = $objAccesoDatos->RetornarConsulta("SELECT id,idMesa, nombreCliente, descripcion, puntuacionMesa, puntuacionMozo, puntuacionCocinero, puntuacionRestaurant FROM encuesta");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'encuesta');
     }
     
 
+    public static function ObtenerEncuesta($id)
+    {
+        $objAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
+        $consulta = $objAccesoDatos->RetornarConsulta("SELECT * FROM encuesta WHERE id = :id");
+        $consulta->bindValue(':id', $id);
+        $consulta->execute();
+        return $consulta->fetchObject('encuesta');
+    }
 }
 ?>

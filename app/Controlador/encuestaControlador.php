@@ -8,14 +8,14 @@ class EncuestaControlador
     {
         //Obtengo los parametros que el servidor me envio
         $parametros = $request->getParsedBody();
-        if(isset($parametros['nombreCliente']) && isset($parametros['descripcion']) && isset($parametros['puntuacionMesa']) && isset($parametros['puntuacionMozo']) && isset($parametros['puntuacionCocinero']) && isset($parametros['puntuacionRestaurant']))
+        if( isset($parametros['nombreCliente']) && isset($parametros['descripcion']) && isset($parametros['puntuacionMesa']) && isset($parametros['puntuacionMozo']) && isset($parametros['puntuacionCocinero']) && isset($parametros['puntuacionRestaurant']))
         {
             $nombreCliente = $parametros['nombreCliente'];
             $descripcion = $parametros['descripcion'];
             $puntuacionMesa = $parametros['puntuacionMesa'];
             $puntuacionMozo = $parametros['puntuacionMozo'];
             $puntuacionCocinero = $parametros['puntuacionCocinero'];
-            $puntuacionRestaurant = $parametros['puntuacionRestaurant'];
+            $puntuacionRestaurant = $parametros['puntuacionRestaurant']; 
             //Creo el objeto
             $encuesta = new Encuesta();
             $encuesta->nombreCliente = $nombreCliente;
@@ -39,6 +39,16 @@ class EncuestaControlador
     {
         $lista = encuestaSQL::TraerEncuestas();
         $payload = json_encode(array("listapedidos" => $lista));
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
+    public function ObtenerEncuestaxId($request, $response, $args)
+    {
+        $id = $args['id'];
+        $encuesta = EncuestaSQL::ObtenerEncuesta($id);
+        $payload = json_encode($encuesta);
+
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');

@@ -2,7 +2,7 @@
 //C:\xampp\htdocs\slim-php-deployment\app\Modelo
 include ("./Controlador/empleadoControlador.php");
 include ("./Controlador/encuestaControlador.php");
-//include ("./Controlador/mesaControlador.php");
+include ("./Controlador/mesaControlador.php");
 include ("./Controlador/pedidoControlador.php");
 include ("./Controlador/productoControlador.php");
 
@@ -29,23 +29,31 @@ $app->addBodyParsingMiddleware();
 //corchetes quiere decir opcional
 // Routes
 $app->group('/pedido', function (RouteCollectorProxy $group) {
-    $group->get('[/]', \pedidoControlador::class . ':TraerTodos');
-    //$group->get('/{id}', \pedidoControlador::class . ':TraerUno');
+
+    $group->get('[/]', \pedidoControlador::class . ':TraerTodos');  
+    $group->get('/{id}', \pedidoControlador::class . ':ObtenerPedidoxId');
     $group->post('[/]', \pedidoControlador::class . ':Insertar');
   });
 
   $app->group('/encuesta', function (RouteCollectorProxy $group) {
     $group->get('[/]', \EncuestaControlador::class . ':TraerEncuestas');
-    //$group->get('/{id}', \mesaControlador::class . ':TraerUno');
+    $group->get('/{id}', \EncuestaControlador::class . ':ObtenerEncuestaxId');
     $group->post('[/]', \EncuestaControlador::class . ':Insertar');
   });
-
   $app->group('/empleado', function (RouteCollectorProxy $group) {
     $group->get('[/]', \EmpleadoControlador::class . ':TraerEmpleados');
-    //$group->get('/{id}', \mesaControlador::class . ':TraerUno');
+    $group->get('/{id}', \EmpleadoControlador::class . ':ObtenerEmpleadoxId');
     $group->post('[/]', \EmpleadoControlador::class . ':InsertarEmpleado');
   });
-
-
+  $app->group('/mesa', function (RouteCollectorProxy $group) {
+     $group->get('[/]', \mesaControlador::class . ':TraerMesas');
+    $group->get('/{id}', \mesaControlador::class . ':ObtenerMesaxId');
+    $group->post('[/]', \mesaControlador::class . ':InsertarMesa');
+  });
+  $app->group('/producto', function (RouteCollectorProxy $group) {
+    $group->get('[/]', \ProductoControlador::class . ':TraerProductos');
+    $group->get('/{id}', \ProductoControlador::class . ':ObtenerProductoxId');
+   $group->post('[/]', \ProductoControlador::class . ':InsertarProducto');
+ });
 $app->run();
 ?>
