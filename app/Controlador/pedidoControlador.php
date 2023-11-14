@@ -35,10 +35,9 @@ class PedidoControlador
             $payload = json_encode(array("mensaje" => "ERROR, No se puedo dar de alta al pedido nuevo"));
         }
         $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
+        return $response;
+          //->withHeader('Content-Type', 'application/json');
     } 
-
     public function ObtenerPedidoxId($request, $response, $args)
     {
         $id = $args['id'];
@@ -46,17 +45,16 @@ class PedidoControlador
         $payload = json_encode($pedido);
 
         $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
+        return $response;
+         //->withHeader('Content-Type', 'application/json');
     }
     public function TraerTodos($request, $response, $args)
     {
         $lista = pedidoSQL::ObtenerTodos();
         $payload = json_encode(array("listapedidos" => $lista));
         $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
+        return $response;
+          //->withHeader('Content-Type', 'application/json');
     }
-
 }
 ?>

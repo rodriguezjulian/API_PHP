@@ -5,6 +5,8 @@ include ("./Controlador/encuestaControlador.php");
 include ("./Controlador/mesaControlador.php");
 include ("./Controlador/pedidoControlador.php");
 include ("./Controlador/productoControlador.php");
+include ("./Middlewares/autorizacionMiddleware.php");
+include ("./Middlewares/JsonMiddleware.php");
 
 // Error Handling
 error_reporting(-1);
@@ -28,6 +30,11 @@ $app->addErrorMiddleware(true, true, true);
 $app->addBodyParsingMiddleware();
 //corchetes quiere decir opcional
 // Routes
+
+
+//PARA EVITAR ESCRIBIR LA LINEA $app->add(new JsonMiddleware());
+$app->add(new JsonMiddleware());
+
 $app->group('/pedido', function (RouteCollectorProxy $group) {
 
     $group->get('[/]', \pedidoControlador::class . ':TraerTodos');  
@@ -44,7 +51,8 @@ $app->group('/pedido', function (RouteCollectorProxy $group) {
     $group->get('[/]', \EmpleadoControlador::class . ':TraerEmpleados');
     $group->get('/{id}', \EmpleadoControlador::class . ':ObtenerEmpleadoxId');
     $group->post('[/]', \EmpleadoControlador::class . ':InsertarEmpleado');
-  });
+  })->add(new AutorizacionMiddleware("Socio"));
+
   $app->group('/mesa', function (RouteCollectorProxy $group) {
      $group->get('[/]', \mesaControlador::class . ':TraerMesas');
     $group->get('/{id}', \mesaControlador::class . ':ObtenerMesaxId');
